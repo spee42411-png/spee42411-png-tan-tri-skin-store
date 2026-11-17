@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quản trị - Tấn Trí Skin Store</title>
+<style>
+body{background:#101018;color:white;font-family:Arial;padding:20px}
+main{max-width:600px;margin:auto}
+input,button{box-sizing:border-box;width:100%;padding:13px;margin:8px 0;border:0;border-radius:8px}
+button{background:#e52b35;color:white;font-weight:bold;cursor:pointer}
+h1{color:#ff4545}
+</style>
+</head>
+<body>
+<main>
+<h1>QUẢN TRỊ SKIN STORE</h1>
+<form action="/admin/login" method="post">
+<h3>Đăng nhập quản trị</h3>
+<input type="password" name="password" placeholder="Mật khẩu quản trị" required>
+<button type="submit">ĐĂNG NHẬP</button>
+</form>
+<hr>
+<h3>Thêm skin mới</h3>
+<form action="/admin/upload" method="post" enctype="multipart/form-data">
+<input name="hero" placeholder="Tên tướng" required>
+<input name="skin_name" placeholder="Tên skin" required>
+<input type="file" name="image" accept="image/*" required>
+<input type="url" name="download_url" placeholder="Link tải skin" required>
+<button type="submit">THÊM SKIN</button>
+</form>
+</main>
+</body>
+</html>
