@@ -4,32 +4,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quản trị - Tấn Trí Skin Store</title>
+<title>Quản trị Tấn Trí Skin Store</title>
 <style>
-body{background:#101018;color:white;font-family:Arial;padding:20px}
-main{max-width:600px;margin:auto}
-input,button{box-sizing:border-box;width:100%;padding:13px;margin:8px 0;border:0;border-radius:8px}
-button{background:#e52b35;color:white;font-weight:bold;cursor:pointer}
+body{margin:0;background:#101018;color:white;font-family:Arial;padding:20px}
+main{max-width:650px;margin:auto}
 h1{color:#ff4545}
+form,.item{background:#20202d;padding:18px;border-radius:12px;margin:15px 0}
+input{width:100%;box-sizing:border-box;padding:13px;margin:8px 0;border:0;border-radius:8px}
+button{background:#e52b35;color:white;border:0;padding:12px;border-radius:8px;cursor:pointer}
+.submit{width:100%;font-weight:bold}
+.item img{width:100px;height:100px;object-fit:cover;border-radius:8px}
+a{color:#ff7777}
 </style>
 </head>
 <body>
 <main>
 <h1>QUẢN TRỊ SKIN STORE</h1>
+
+{% if not session.get('admin') %}
 <form action="/admin/login" method="post">
-<h3>Đăng nhập quản trị</h3>
+<h3>Đăng nhập</h3>
 <input type="password" name="password" placeholder="Mật khẩu quản trị" required>
-<button type="submit">ĐĂNG NHẬP</button>
+<button class="submit">ĐĂNG NHẬP</button>
 </form>
-<hr>
-<h3>Thêm skin mới</h3>
+{% else %}
+
+<p>Xin chào quản trị viên!</p>
+<a href="/admin/logout">Đăng xuất</a>
+
 <form action="/admin/upload" method="post" enctype="multipart/form-data">
+<h3>THÊM SKIN MỚI</h3>
 <input name="hero" placeholder="Tên tướng" required>
 <input name="skin_name" placeholder="Tên skin" required>
-<input type="file" name="image" accept="image/*" required>
+<label>Chọn hình ảnh:</label>
+<input type="file" name="image" accept="image/png,image/jpeg,image/webp" required>
 <input type="url" name="download_url" placeholder="Link tải skin" required>
-<button type="submit">THÊM SKIN</button>
+<button class="submit">+ THÊM SKIN</button>
 </form>
+
+<h3>QUẢN LÝ SKIN</h3>
+{% for skin in skins %}
+<div class="item">
+<img src="{{ skin.image_url }}" alt="">
+<p><b>{{ skin.hero }}</b> - {{ skin.skin_name }}</p>
+<a href="{{ skin.download_url }}" target="_blank">Kiểm tra link tải</a>
+<form action="/admin/delete/{{ skin.id }}" method="post">
+<button onclick="return confirm('Bạn có chắc muốn xóa skin này?')">XÓA SKIN</button>
+</form>
+</div>
+{% else %}
+<p>Chưa có skin nào.</p>
+{% endfor %}
+
+{% endif %}
 </main>
 </body>
 </html>
